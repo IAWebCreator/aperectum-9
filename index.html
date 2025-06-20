@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ApeRectum - The ultimate meme cryptocurrency combining crude astronomical humor with celestial bodies. Join the cosmic void of gaseous adventures!">
+    <title>ApeRectum - The Ultimate Cosmic Meme Experience</title>
+    
+    <style>
+        /* CSS Variables for Color Management */
+        :root {
+            --primary-orange: #FF6600;
+            --primary-black: #000000;
+            --primary-white: #FFFFFF;
+            --cosmic-purple: #330066;
+            --cosmic-blue: #000033;
+            --gas-brown: rgba(100, 70, 0, 0.1);
+            --gas-green: rgba(50, 50, 0, 0.1);
+            --void-bg: #000000;
+            --text-primary: #FFFFFF;
+            --text-secondary: #CCCCCC;
+        }
+
+        /* CSS Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--void-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-orange);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transition: transform 0.1s ease;
+            mix-blend-mode: difference;
+        }
+
+        /* Animated Background Canvas */
+        #cosmic-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 6vw, 4rem);
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        /* Main Container */
+        .main-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            animation: heroEmergence 2s ease-out;
+        }
+
+        .meme-style-heading {
+            background: linear-gradient(45deg, var(--primary-orange), var(--primary-white));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulsarEffect 3s ease-in-out infinite;
+            margin-bottom: 1rem;
+        }
+
+        .engaging-subheading {
+            color: var(--text-secondary);
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease-out 0.5s forwards;
+        }
+
+        /* Interactive Cosmic Button */
+        .cosmic-button {
+            background: var(--primary-orange);
+            color: var(--primary-black);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease-out 1s forwards;
+        }
+
+        .cosmic-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--primary-orange);
+        }
+
+        .cosmic-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-title-with-animation {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: sectionTitleReveal 1s ease-out forwards;
+        }
+
+        .section-title-with-animation::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--primary-orange);
+            animation: underlineExpand 1s ease-out 0.5s forwards;
+            transform-origin: center;
+            scale: 0 1;
+        }
+
+        /* Content Blocks */
+        .content-block {
+            background: rgba(var(--primary-black), 0.8);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            border: 2px solid rgba(var(--primary-orange), 0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: blockEmergence 1s ease-out forwards;
+        }
+
+        .content-block:hover {
+            border-color: var(--primary-orange);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 102, 0, 0.2);
+        }
+
+        .rounded-image-with-shadow {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: block;
+            border: 3px solid var(--primary-orange);
+            transition: transform 0.3s ease;
+        }
+
+        .rounded-image-with-shadow:hover {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        /* Tokenomics Data Visualization */
+        .tokenomics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .token-stat {
+            background: linear-gradient(135deg, var(--cosmic-purple), var(--cosmic-blue));
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: statReveal 0.8s ease-out forwards;
+        }
+
+        .token-stat:nth-child(1) { animation-delay: 0.2s; }
+        .token-stat:nth-child(2) { animation-delay: 0.4s; }
+        .token-stat:nth-child(3) { animation-delay: 0.6s; }
+
+        .token-stat:hover {
+            transform: scale(1.05);
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 25px rgba(255, 102, 0, 0.4);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-orange);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* How to Buy Steps */
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .step-card {
+            background: rgba(var(--primary-black), 0.9);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary-orange);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(-50px);
+            animation: stepSlideIn 0.8s ease-out forwards;
+        }
+
+        .step-card:nth-child(1) { animation-delay: 0.1s; }
+        .step-card:nth-child(2) { animation-delay: 0.3s; }
+        .step-card:nth-child(3) { animation-delay: 0.5s; }
+        .step-card:nth-child(4) { animation-delay: 0.7s; }
+
+        .step-card:hover {
+            transform: translateX(10px);
+            box-shadow: -5px 0 15px rgba(255, 102, 0, 0.3);
+        }
+
+        .step-title {
+            color: var(--primary-orange);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        /* Timeline for Roadmap */
+        .timeline-container {
+            position: relative;
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--primary-orange);
+            transform: translateX(-50%);
+        }
+
+        .timeline-event {
+            position: relative;
+            margin: 3rem 0;
+            opacity: 0;
+            animation: timelineReveal 1s ease-out forwards;
+        }
+
+        .timeline-event:nth-child(odd) { animation-delay: 0.2s; }
+        .timeline-event:nth-child(even) { animation-delay: 0.4s; }
+
+        .timeline-content {
+            background: rgba(var(--primary-black), 0.9);
+            padding: 2rem;
+            border-radius: 15px;
+            width: 45%;
+            border: 2px solid var(--primary-orange);
+            position: relative;
+        }
+
+        .timeline-event:nth-child(odd) .timeline-content {
+            margin-left: 55%;
+        }
+
+        .timeline-event:nth-child(even) .timeline-content {
+            margin-right: 55%;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: var(--primary-orange);
+            border-radius: 50%;
+            border: 4px solid var(--void-bg);
+            z-index: 2;
+        }
+
+        /* Social Links */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--cosmic-purple), var(--cosmic-blue));
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: socialReveal 0.6s ease-out forwards;
+        }
+
+        .social-link:nth-child(1) { animation-delay: 0.1s; }
+        .social-link:nth-child(2) { animation-delay: 0.2s; }
+        .social-link:nth-child(3) { animation-delay: 0.3s; }
+        .social-link:nth-child(4) { animation-delay: 0.4s; }
+
+        .social-link:hover {
+            background: var(--primary-orange);
+            color: var(--primary-black);
+            transform: scale(1.1) rotate(3deg);
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(var(--primary-black), 0.95);
+            padding: 2rem;
+            text-align: center;
+            border-top: 2px solid var(--primary-orange);
+            margin-top: 4rem;
+        }
+
+        .copiable-text {
+            background: var(--cosmic-purple);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .copiable-text:hover {
+            background: var(--primary-orange);
+            color: var(--primary-black);
+        }
+
+        /* Animations */
+        @keyframes heroEmergence {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes pulsarEffect {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes sectionTitleReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes underlineExpand {
+            to {
+                scale: 1 1;
+            }
+        }
+
+        @keyframes blockEmergence {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes statReveal {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes stepSlideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes timelineReveal {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes socialReveal {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .timeline-content {
+                width: 90%;
+                margin: 0 auto !important;
+            }
+
+            .timeline-line {
+                left: 20px;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .hero-section {
+                padding: 1rem;
+            }
+
+            .section {
+                padding: 2rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tokenomics-grid,
+            .steps-container,
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus styles for keyboard navigation */
+        .cosmic-button:focus,
+        .social-link:focus,
+        .copiable-text:focus {
+            outline: 3px solid var(--primary-orange);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="customCursor"></div>
+
+    <!-- Animated Background Canvas -->
+    <canvas id="cosmic-canvas"></canvas>
+
+    <!-- Main Content Container -->
+    <div class="main-container">
+        <!-- Hero Section -->
+        <section class="hero-section" role="banner">
+            <div class="hero-content">
+                <h1 class="meme-style-heading">Welcome to the Cosmic Void of ApeRectum</h1>
+                <p class="engaging-subheading">Your portal to the most gaseous, astronomically crude meme-powered cryptocurrency in the universe!</p>
+                <button class="cosmic-button" id="exploreBtn" aria-label="Explore the cosmic journey">
+                    Enter the Gaseous Void
+                </button>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="section" id="about" role="main">
+            <h2 class="section-title-with-animation">What is ApeRectum?</h2>
+            <div class="content-block">
+                <img src="./logo.png" alt="ApeRectum Logo - Cosmic Bear Silhouette" class="rounded-image-with-shadow">
+                <p>
+                    Welcome to the most hilariously inappropriate corner of the crypto cosmos! ApeRectum ($AR) is where crude anatomical humor meets astronomical wonder, creating a meme token that's truly out of this world. 
+                </p>
+                <p>
+                    Born from the primordial flatulence of the universe itself, ApeRectum combines variations of "Anus" and "Fart" with celestial bodies like Uranus and cosmic phenomena. It's not just a token—it's a gaseous journey through the stars, where every transaction echoes through the cosmic void like the universe's own digestive symphony.
+                </p>
+                <p>
+                    Whether you're here for the crude humor, the astronomical puns, or just want to own a piece of the cosmos's most irreverent digital asset, ApeRectum promises to deliver an experience that's both intellectually stimulating and delightfully inappropriate.
+                </p>
+            </div>
+        </section>
+
+        <!-- Tokenomics Section -->
+        <section class="section" id="tokenomics">
+            <h2 class="section-title-with-animation">Cosmic Gasonomics</h2>
+            <div class="tokenomics-grid">
+                <div class="token-stat">
+                    <div class="stat-value">1,000,000,000</div>
+                    <div class="stat-label">Total Supply</div>
+                </div>
+                <div class="token-stat">
+                    <div class="stat-value">500,000,000</div>
+                    <div class="stat-label">Burned to the Void</div>
+                </div>
+                <div class="token-stat">
+                    <div class="stat-value">500,000,000</div>
+                    <div class="stat-label">Circulating in Space</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How to Buy Section -->
+        <section class="section" id="how-to-buy">
+            <h2 class="section-title-with-animation">Join the Cosmic Gas Chamber - How to Buy</h2>
+            <div class="steps-container">
+                <div class="step-card">
+                    <h3 class="step-title">1. Get a Wallet</h3>
+                    <p>Download a reputable Solana wallet like Phantom or Solflare to store your cosmic gases securely.</p>
+                </div>
+                <div class="step-card">
+                    <h3 class="step-title">2. Acquire SOL</h3>
+                    <p>Purchase Solana (SOL) from a cryptocurrency exchange like Binance, Coinbase, or Kraken.</p>
+                </div>
+                <div class="step-card">
+                    <h3 class="step-title">3. Connect to a DEX</h3>
+                    <p>Connect your wallet to a Solana-based decentralized exchange like Raydium or Jupiter.</p>
+                </div>
+                <div class="step-card">
+                    <h3 class="step-title">4. Swap SOL for $AR</h3>
+                    <p>Use the DEX's swap feature to exchange your SOL for ApeRectum tokens and join the cosmic flatulence!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Roadmap Section -->
+        <section class="section" id="roadmap">
+            <h2 class="section-title-with-animation">The ApeRectum Cosmic Journey - Our Roadmap</h2>
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                <div class="timeline-event">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Phase 1: Primordial Gas Formation</h3>
+                        <p>Launch ApeRectum token, establish initial community, and begin the cosmic gas accumulation process.</p>
+                    </div>
+                </div>
+                <div class="timeline-event">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Phase 2: Stellar Wind Expansion</h3>
+                        <p>Major exchange listings, partnerships with other cosmic entities, and community-driven meme creation contests.</p>
+                    </div>
+                </div>
+                <div class="timeline-event">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Phase 3: Galactic Dominance</h3>
+                        <p>Launch ApeRectum NFT collection, develop cosmic gaming experiences, and establish the ultimate meme ecosystem.</p>
+                    </div>
+                </div>
+                <div class="timeline-event">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Phase 4: Universal Flatulence</h3>
+                        <p>Cross-chain integration, metaverse presence, and becoming the premier astronomical humor cryptocurrency across all galaxies.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Section -->
+        <section class="section" id="community">
+            <h2 class="section-title-with-animation">Connect with the Cosmic Gas Cloud</h2>
+            <div class="social-grid">
+                <a href="https://twitter.com/aperectum" class="social-link" aria-label="Follow ApeRectum on Twitter">
+                    Twitter
+                </a>
+                <a href="https://t.me/aperectum" class="social-link" aria-label="Join ApeRectum Telegram community">
+                    Telegram
+                </a>
+                <a href="https://youtube.com/@aperectum" class="social-link" aria-label="Subscribe to ApeRectum YouTube channel">
+                    YouTube
+                </a>
+                <a href="https://tiktok.com/@aperectum" class="social-link" aria-label="Follow ApeRectum on TikTok">
+                    TikTok
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer" role="contentinfo">
+            <p>&copy; 2024 ApeRectum. All rights reserved to the cosmic void.</p>
+            <div class="copiable-text" id="contractAddress" aria-label="Contract address, click to copy">
+                CHiNsA2B6ZbmKnEmHPCbbX9aXJyoJzAtcLpHEDd6Qyq3
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Immediately Invoked Function Expression to avoid global scope pollution
+        (function() {
+            'use strict';
+
+            // Custom cursor functionality
+            const cursor = document.getElementById('customCursor');
+            let mouseX = 0, mouseY = 0;
+            let cursorX = 0, cursorY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function animateCursor() {
+                cursorX += (mouseX - cursorX) * 0.1;
+                cursorY += (mouseY - cursorY) * 0.1;
+                cursor.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            // Hide cursor on touch devices
+            if ('ontouchstart' in window) {
+                cursor.style.display = 'none';
+                document.body.style.cursor = 'auto';
+            }
+
+            // Cosmic Canvas Animation
+            const canvas = document.getElementById('cosmic-canvas');
+            const ctx = canvas.getContext('2d');
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // Particle system for cosmic background
+            class CosmicParticle {
+                constructor() {
+                    this.reset();
+                    this.y = Math.random() * canvas.height;
+                    this.life = Math.random();
+                }
+
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = -10;
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    this.vy = Math.random() * 0.5 + 0.2;
+                    this.life = 1;
+                    this.decay = Math.random() * 0.01 + 0.005;
+                    this.size = Math.random() * 2 + 1;
+                    this.type = Math.random() > 0.8 ? 'gas' : 'star';
+                }
+
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.life -= this.decay;
+
+                    if (this.life <= 0 || this.y > canvas.height + 10) {
+                        this.reset();
+                    }
+                }
+
+                draw() {
+                    ctx.save();
+                    ctx.globalAlpha = this.life;
+
+                    if (this.type === 'gas') {
+                        // Gas cloud particle
+                        const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 3);
+                        gradient.addColorStop(0, `rgba(100, 70, 0, ${this.life * 0.3})`);
+                        gradient.addColorStop(0.5, `rgba(50, 50, 0, ${this.life * 0.2})`);
+                        gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                        
+                        ctx.fillStyle = gradient;
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
+                        ctx.fill();
+                    } else {
+                        // Star particle
+                        ctx.fillStyle = `rgba(255, 255, 255, ${this.life * 0.8})`;
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+
+                    ctx.restore();
+                }
+            }
+
+            // Ghost bear silhouette
+            class GhostBear {
+                constructor() {
+                    this.x = -100;
+                    this.y = Math.random() * canvas.height * 0.5 + canvas.height * 0.25;
+                    this.vx = 0.2;
+                    this.opacity = 0.05;
+                    this.size = 80;
+                    this.visible = Math.random() > 0.99; // Very rare appearance
+                }
+
+                update() {
+                    this.x += this.vx;
+                    if (this.x > canvas.width + 100) {
+                        this.x = -100;
+                        this.y = Math.random() * canvas.height * 0.5 + canvas.height * 0.25;
+                        this.visible = Math.random() > 0.99;
+                    }
+                }
+
+                draw() {
+                    if (!this.visible) return;
+
+                    ctx.save();
+                    ctx.globalAlpha = this.opacity;
+                    ctx.fillStyle = '#000000';
+                    
+                    // Simple bear silhouette path
+                    ctx.beginPath();
+                    ctx.ellipse(this.x, this.y, this.size * 0.6, this.size * 0.4, 0, 0, Math.PI * 2);
+                    ctx.ellipse(this.x - this.size * 0.3, this.y - this.size * 0.2, this.size * 0.15, this.size * 0.15, 0, 0, Math.PI * 2);
+                    ctx.ellipse(this.x + this.size * 0.3, this.y - this.size * 0.2, this.size * 0.15, this.size * 0.15, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.restore();
+                }
+            }
+
+            // Initialize particles
+            const particles = [];
+            const numParticles = 100;
+            for (let i = 0; i < numParticles; i++) {
+                particles.push(new CosmicParticle());
+            }
+
+            const ghostBear = new GhostBear();
+
+            // Occasional gas burst effect
+            class GasBurst {
+                constructor(x, y) {
+                    this.x = x;
+                    this.y = y;
+                    this.particles = [];
+                    this.life = 1;
+                    
+                    for (let i = 0; i < 10; i++) {
+                        this.particles.push({
+                            x: x,
+                            y: y,
+                            vx: (Math.random() - 0.5) * 4,
+                            vy: (Math.random() - 0.5) * 4,
+                            size: Math.random() * 3 + 1,
+                
